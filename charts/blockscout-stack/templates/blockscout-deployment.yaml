@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "blockscout-stack.fullname" . }}-blockscout
+  annotations: 
+    {{- toYaml .Values.blockscout.annotations | nindent 4 }}
   labels:
     app: {{ include "blockscout-stack.fullname" . }}-blockscout
     {{- include "blockscout-stack.labels" . | nindent 4 }}
@@ -19,7 +21,7 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/blockscout-secret.yaml") . | sha256sum }}
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.blockscout.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -236,6 +238,9 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      {{- with .Values.blockscout.sidecars }}
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
       {{- with .Values.blockscout.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

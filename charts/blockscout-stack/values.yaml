@@ -120,6 +120,10 @@ blockscout:
   args:
     - -c
     - bin/blockscout start
+
+  ## Annotations to add to blockscout deployment
+  annotations: {}
+
   ## Annotations to add to blockscout pod
   podAnnotations: {}
 
@@ -197,6 +201,10 @@ blockscout:
   # - name: foo
   #   mountPath: "/etc/foo"
   #   readOnly: true
+  
+  # Additional containers sidecar
+  sidecars: []
+
 ## Configuration options for frontend
 ##
 frontend:
@@ -208,6 +216,11 @@ frontend:
     pullPolicy: IfNotPresent
 
   replicaCount: 2
+
+  ## Annotations to add to frontend deployment
+  ##
+  annotations: {}
+
   ## Annotations to add to frontend pod
   ##
   podAnnotations: {}
